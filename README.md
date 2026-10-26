@@ -26,7 +26,13 @@ File `.env.example` chỉ liệt kê tên biến. File cấu hình thật đư�
 - Key cũ chưa có metadata quản lý được chuyển sang chế độ cần duyệt ID khi kích hoạt trên web. Key đã quản lý giữ nguyên chủ sở hữu và thời hạn. API cấp phép hiện có đọc cùng bản ghi nên từ chối ID bị gỡ sau khi phiên đã ký hiện tại hết hạn (tối đa 30 giây với key quản lý).
 - Server chỉ lấy key từ phiên mã hóa để đọc hoặc reset; client không thể truyền ID của key khác. Phiên đăng xuất bị thu hồi trên Firebase.
 
-Website dùng cùng `licensesV9` với API key trong gói game. Không import snapshot, tạo lại Firebase/RSA/CA hoặc thay tên miền API của menu. Website không cần khóa RSA riêng và không chạy proxy.
+Website và API menu dùng chung `licensesV9`. API cấp phép ở `https://www.mizzeproxy.store/v9/lease`; dùng bytes R14.33-KEYCONNECT đi kèm. Khóa RSA hiện có được giữ nguyên, không tạo identity mới.
+
+## Kết nối key cũ và key vừa tạo
+
+Đặt `LEGACY_FIREBASE_PROJECT_ID`, `LEGACY_FIREBASE_DATABASE_URL` và `LEGACY_FIREBASE_SERVICE_ACCOUNT_JSON` cho Firebase gốc. Khi đăng nhập một key chưa có ở kho hiện tại, server tra đúng hash Key/mật khẩu trong kho gốc và chuyển bản ghi hợp lệ sang kho mà menu dùng. Việc này diễn ra trực tiếp mỗi lần cần tra key, nên key vừa tạo ở bot/admin cũ cũng dùng được; không phụ thuộc snapshot lúc xuất source. Key đang có ở kho chính không bị bản cũ ghi đè. Key sai mật khẩu, hết hạn hoặc bị khóa không được mở lại.
+
+Đặt `MIZZE_LICENSE_PRIVATE_KEY_BASE64` là base64 PEM RSA3072 của bộ game được bàn giao. Đây là Secret chỉ ở Production, tuyệt đối không commit vào GitHub. Server xác minh fingerprint khóa khớp `backend/game-license-public.json` trước khi ký. `/healthz` công khai fingerprint để đối chiếu với bytes; không trả khóa riêng.
 
 ## Phát triển
 

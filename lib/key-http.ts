@@ -5,8 +5,9 @@ import { open, seal, TTL, type KeySession } from './key-session';
 import * as policy from '../backend/key-access.cjs';
 import { createDatabase } from '../backend/test-db.cjs';
 import { buildRecord } from '../backend/provision.cjs';
+import { ensureKey } from '../backend/key-source.cjs';
 
-const globals=globalThis as typeof globalThis & { mizzeKeyDemo?: ReturnType<typeof createDatabase> };
+const globals=globalThis as typeof globalThis & { mizzeKeyDemo?: ReturnType<typeof createDatabase>; mizzeKeyLegacyDemo?: ReturnType<typeof createDatabase> };
 async function database(demo: boolean) {
   if(!demo)return (await import('./key-admin')).keyDatabase();
   if(!globals.mizzeKeyDemo){
@@ -54,6 +55,7 @@ async function handleKey(request: NextRequest, action: 'session'|'login'|'logout
         if(Object.keys(body).some(k=>!['key','password','deviceId'].includes(k)))throw new AppError('invalid_request',400);
         const pair=policy.credentials(body.key,body.password,body.deviceId),ip=request.headers.get('x-vercel-forwarded-for')||request.headers.get('x-forwarded-for')?.split(',')[0]||request.nextUrl.hostname;
         await rate(db,'login-ip:'+ip,30);await rate(db,'login-key:'+String(body.key).trim().toUpperCase(),10);
+        await ensureKey(db,async()=>demo?(globals.mizzeKeyLegacyDemo||null):(await import('./key-admin')).legacyKeyDatabase(),pair.licenseId);
         let failure:any;
         const result=await db.ref('licensesV9/'+pair.licenseId).transaction((record:any)=>{
           if(record===null)return null;
