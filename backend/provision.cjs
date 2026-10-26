@@ -8,7 +8,7 @@ function parseArgs(args){
  if(typeof ownerUid!=='string'||!ownerUid.length||ownerUid.length>128||/[\u0000-\u0020]/.test(ownerUid)||!Number.isInteger(days)||days<1||days>3650||!Number.isInteger(maxDevices)||maxDevices<1||maxDevices>50)throw Error('invalid_arguments');
  const label=options['--label']||'Mizze';if(label.length>120)throw Error('invalid_arguments');
  const key=normalizeKey(options['--key']||'MZ10-'+crypto.randomBytes(16).toString('hex').toUpperCase()),password=options['--password']||crypto.randomBytes(24).toString('hex');
- if(!/^[!-~]{16,128}$/.test(password)||key===password)throw Error('invalid_password');
+ if(!/^[!-~]{8,128}$/.test(password)||key===password)throw Error('invalid_password');
  return {ownerUid,durationMs:days*86400000,maxDevices,label,key,password};
 }
 function buildRecord(options,now){

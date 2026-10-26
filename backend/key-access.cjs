@@ -6,7 +6,7 @@ const hex=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 function credentials(key,password,deviceId){
  if(typeof key!=='string'||typeof password!=='string'||typeof deviceId!=='string')fail('invalid_request');
  key=key.trim().toUpperCase();deviceId=deviceId.trim().toLowerCase();
- if(!/^[!-~]{8,128}$/.test(key)||!/^[!-~]{16,128}$/.test(password)||key===password||!hex(deviceId))fail('invalid_request');
+ if(!/^[!-~]{8,128}$/.test(key)||!/^[!-~]{8,128}$/.test(password)||key===password||!hex(deviceId))fail('invalid_request');
  return {licenseId:crypto.createHash('sha256').update('mizze-pair-v1\n'+key.length+':'+key+'\n'+password.length+':'+password).digest('hex'),deviceId};
 }
 function usable(record,now){if(!lease.validRecord(record,now))fail('license_denied',403);}
