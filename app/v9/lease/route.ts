@@ -1,5 +1,4 @@
-import { NextRequest } from 'next/server';
-import { leaseRequest } from '@/lib/game-http';
+import { NextResponse } from 'next/server';
 export const runtime='nodejs';
 export const maxDuration=15;
-export function POST(request:NextRequest){return leaseRequest(request);}
+export function POST(){return NextResponse.json({error:'menu_update_required'},{status:410,headers:{'Cache-Control':'no-store'}});}

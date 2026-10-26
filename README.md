@@ -26,13 +26,13 @@ File `.env.example` chỉ liệt kê tên biến. File cấu hình thật đư�
 - Key cũ chưa có metadata quản lý được chuyển sang chế độ cần duyệt ID khi kích hoạt trên web. Key đã quản lý giữ nguyên chủ sở hữu và thời hạn. API cấp phép hiện có đọc cùng bản ghi nên từ chối ID bị gỡ sau khi phiên đã ký hiện tại hết hạn (tối đa 30 giây với key quản lý).
 - Server chỉ lấy key từ phiên mã hóa để đọc hoặc reset; client không thể truyền ID của key khác. Phiên đăng xuất bị thu hồi trên Firebase.
 
-Website và API menu dùng chung `licensesV9`. API cấp phép ở `https://www.mizzeproxy.store/v9/lease`; dùng bytes R14.33-KEYCONNECT đi kèm. Khóa RSA hiện có được giữ nguyên, không tạo identity mới.
+Website và API menu dùng chung `licensesV9`. API cấp phép ở `https://www.mizzeproxy.store/v10/lease`; dùng bytes R14.35-BRAND-SECURE đi kèm. Giao thức 10 dùng identity RSA mới. Endpoint v9 trả 410 để yêu cầu cập nhật menu; không có đường hạ cấp.
 
 ## Kết nối key cũ và key vừa tạo
 
 Đặt `LEGACY_FIREBASE_PROJECT_ID`, `LEGACY_FIREBASE_DATABASE_URL` và `LEGACY_FIREBASE_SERVICE_ACCOUNT_JSON` cho Firebase gốc. Khi đăng nhập một key chưa có ở kho hiện tại, server tra đúng hash Key/mật khẩu trong kho gốc và chuyển bản ghi hợp lệ sang kho mà menu dùng. Việc này diễn ra trực tiếp mỗi lần cần tra key, nên key vừa tạo ở bot/admin cũ cũng dùng được; không phụ thuộc snapshot lúc xuất source. Key đang có ở kho chính không bị bản cũ ghi đè. Key sai mật khẩu, hết hạn hoặc bị khóa không được mở lại.
 
-Đặt `MIZZE_LICENSE_PRIVATE_KEY_BASE64` là base64 PEM RSA3072 của bộ game được bàn giao. Đây là Secret chỉ ở Production, tuyệt đối không commit vào GitHub. Server xác minh fingerprint khóa khớp `backend/game-license-public.json` trước khi ký. `/healthz` công khai fingerprint để đối chiếu với bytes; không trả khóa riêng.
+Đặt `MIZZE_LICENSE_V10_PRIVATE_KEY_BASE64` là base64 PEM RSA3072 của bộ game được bàn giao. Đây là Secret chỉ ở Production, tuyệt đối không commit vào GitHub. Server xác minh fingerprint khóa khớp `backend/game-license-v10.public.json` trước khi ký. `/healthz` công khai fingerprint để đối chiếu với bytes; không trả khóa riêng.
 
 ## Phát triển
 
@@ -53,3 +53,9 @@ npm run check
 Các kiểm tra gồm hash đúng với menu, hạn key, duyệt ID, reset đồng thời, ranh giới 00:00, hai lượt mỗi ngày, CSRF, phiên mã hóa, chống thao tác sang key khác và thu hồi phiên đăng xuất. Dữ liệu kiểm thử là dữ liệu giả.
 
 Hướng dẫn cấu hình môi trường: [Vercel](https://vercel.com/docs/environment-variables), [Next.js](https://nextjs.org/docs/app/guides/environment-variables).
+
+## Bản R14.35
+
+Giấy phép mới ràng buộc protocol/release/branding digest, key, ID máy và nonce; phiên tối đa 30 giây, không tự đăng ký thiết bị từ menu. Thiết bị phải kích hoạt qua web. Nonce đã dùng bị từ chối trong cửa sổ hai phút, sổ nonce được giới hạn số mục.
+
+Thay identity ký không thu hồi được quyền quản trị Firebase/VPS bị lộ. Cần Owner Google Cloud thay tài khoản dịch vụ và thu hồi quyền/khóa cũ; tài khoản dịch vụ hiện tại không có quyền IAM. Không đưa signer mới lên VPS đang bị nghi xâm nhập.
