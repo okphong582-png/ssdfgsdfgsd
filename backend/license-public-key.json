@@ -1,0 +1,10 @@
+{
+  "algorithm": "RS256",
+  "bits": 3072,
+  "kid": "a65a25db3a11bdc3f764fd2cf31d25e7ad9ad94e579b97ca0b059836b852ee75",
+  "cspPublicBlob": "BgIAAAAkAABSU0ExAAwAAAEAAQCpQQiBSmjZ+olxAJHg6/O0T7a9/cCBsi60/l0t2TcKWZsbV3PSpM3kGoeAhGJYqvlFVXGqzjaoUn214sNgWkHX2dCG+bOlUrTByAkk0NJenpejvFNljmiahAaDlvVkRNFAG6WuuwzD2kKoK366vuM06kiPbI5vEly6WhrulHuZZ8hpo0/E9NhLAUFKnxe2FA09qNc4uokrxT2Uky//n/9FwUGvvYM9RdDUVGSw6xL3QCsDV1foNWel4MUJrUKzAk5oP0TRwHFoog9Iu2lxRWP2oPMiuzzvwQbZdJ8A6DQ7TLhRuaZ+szgljkq5UUfrKFJOqpEUApVWcDCAcLrtcvwZsOM+6UIo4rKpFac2fTdYUokrqhGW+u1apNEQIxGqeqpvJOWJo523XppefHQyc85pO7sAo6f+5DEMujXmYpPEIMYTY1joRUc8ZNNgIcztTXYk2v+gTJZGXWz3mxyyqJgeRv66xA4ZhBWsw3glxLKdEW2Meed6U0rFCpe1XbOBQcY=",
+  "spkiPublicPem": "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAxkGBs121lwrFSlN653mM\nbRGdssQleMOsFYQZDsS6/kYemKiyHJv3bF1Glkyg/9okdk3tzCFg02Q8R0XoWGMT\nxiDEk2LmNboMMeT+p6MAuztpznMydHxeml63naOJ5SRvqnqqESMQ0aRa7fqWEaor\niVJYN302pxWpsuIoQuk+47AZ/HLtunCAMHBWlQIUkapOUijrR1G5So4lOLN+prlR\nuEw7NOgAn3TZBsHvPLsi86D2Y0VxabtID6JoccDRRD9oTgKzQq0JxeClZzXoV1cD\nK0D3EuuwZFTU0EU9g72vQcFF/5//L5OUPcUribo416g9DRS2F59KQQFL2PTET6Np\nyGeZe5TuGlq6XBJvjmyPSOo04766fiuoQtrDDLuupRtA0URk9ZaDBoSaaI5lU7yj\nl55e0tAkCcjBtFKls/mG0NnXQVpgw+K1fVKoNs6qcVVF+apYYoSAhxrkzaTSc1cb\nm1kKN9ktXf60LrKBwP29tk+08+vgkQBxifrZaEqBCEGpAgMBAAE=\n-----END PUBLIC KEY-----\n",
+  "endpoint": "https://api.mizzeproxy.store/v9/lease",
+  "deployed": false,
+  "hosting": "VPS"
+}
