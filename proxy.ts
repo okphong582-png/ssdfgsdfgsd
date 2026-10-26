@@ -1,5 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
+import { open } from './lib/key-session';
 
 export function proxy(request: NextRequest) {
   const nonce = randomBytes(18).toString('base64');
@@ -14,14 +15,22 @@ export function proxy(request: NextRequest) {
   ].join('; ');
   const headers = new Headers(request.headers);
   headers.set('x-nonce', nonce); headers.set('Content-Security-Policy', policy);
-  const response = NextResponse.next({ request: { headers } });
   // Seed CSRF before hydration. Parallel initial session requests (including
   // React Strict Mode) must see one cookie rather than race two new tokens.
   const secure = request.nextUrl.protocol === 'https:';
   const csrfName = secure ? '__Host-mizze_csrf' : 'mizze_csrf';
-  if (!/^[a-f0-9]{64}$/.test(request.cookies.get(csrfName)?.value || '')) {
-    response.cookies.set(csrfName, randomBytes(32).toString('hex'), { secure, httpOnly: true, sameSite: 'strict', path: '/', maxAge: 86400 });
+  const newCsrf = !/^[a-f0-9]{64}$/.test(request.cookies.get(csrfName)?.value || '') ? randomBytes(32).toString('hex') : null;
+  if (newCsrf) {
+    const jar = new Map(request.cookies.getAll().map(c => [c.name, c.value]));
+    jar.set(csrfName, newCsrf);
+    headers.set('cookie', [...jar].map(([name, value]) => `${name}=${value}`).join('; '));
   }
+  const needsLogin = request.nextUrl.pathname === '/' || (request.nextUrl.pathname === '/dashboard' &&
+    !open(request.cookies.get(secure ? '__Host-mizze_session' : 'mizze_session')?.value));
+  const response = needsLogin
+    ? NextResponse.redirect(new URL('/login', request.url), 307)
+    : NextResponse.next({ request: { headers } });
+  if (newCsrf) response.cookies.set(csrfName, newCsrf, { secure, httpOnly: true, sameSite: 'strict', path: '/', maxAge: 86400 });
   response.headers.set('Content-Security-Policy', policy);
   response.headers.set('Cache-Control', 'private, no-store');
   return response;
