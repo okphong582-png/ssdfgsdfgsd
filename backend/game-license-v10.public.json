@@ -2,7 +2,7 @@
   "kid": "a18ad7739db882e2e7f22b9ebc5a9ff8294dd70dae73d2ad439551cde9ee3de0",
   "protocol": 10,
   "audience": "mizze-th-license-v10",
-  "release": "R14.35",
-  "brandDigest": "15c711fcceff5715fd4bf4b1db7ed1cd5c0265a9a7c37a3373c348a8b2ac4c25",
+  "release": "R14.36",
+  "brandDigest": "4e5c35e84c3831506ab7224ebcbd2f28599b70e2b372b2a1195cf82b064173ac",
   "spkiPublicPem": "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAk0jJLcGycqxu+j6KcqSl\nm653w9810BwvdyJvAFzd9p4a2wuSRxYFdLlZjxgvudSLSy6W2qTENJAX0lPQoqkc\n5U0hbXPAmFDoqEzkMVEqHBKYc/B7ay9hFYI/IxsrH9APi19tG82tmRnJbRVESOIH\nhecEjm5Wyln4drdhSD/Yl/6+ndpvHJObz7wrf9AQxdtpKW39osUsat4cQUeeRQws\njsoySFX1oBgojMIEt0G6VYlC623GbChoaYUtyptv/exqJARLmVjhqtfWpdTaKNz+\nmbhMtq/Mh5UJRUtilrTjvfwKsr9t9JqE3g5DWwo9foUC5wTSzsYOt1eAmucqGrjR\nhZhgo4UlmG/WLTOwEkIJf8KKHzA44qLrE7cWEfpvPZv1Qe+l13G5qSfllvrlg8lU\nPE+3idGW1kpYzxPXHVI0gZMZ0bKMukHTQuJ4R3L2BhmaKPBVHlVQUuwUqzaJRVkX\n42e3NypUZo0wBdrySdLZ/2JBaHm6bVe7LiciB+/OsShVAgMBAAE=\n-----END PUBLIC KEY-----\n"
 }

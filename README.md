@@ -26,7 +26,7 @@ File `.env.example` chỉ liệt kê tên biến. File cấu hình thật đư�
 - Key cũ chưa có metadata quản lý được chuyển sang chế độ cần duyệt ID khi kích hoạt trên web. Key đã quản lý giữ nguyên chủ sở hữu và thời hạn. API cấp phép hiện có đọc cùng bản ghi nên từ chối ID bị gỡ sau khi phiên đã ký hiện tại hết hạn (tối đa 30 giây với key quản lý).
 - Server chỉ lấy key từ phiên mã hóa để đọc hoặc reset; client không thể truyền ID của key khác. Phiên đăng xuất bị thu hồi trên Firebase.
 
-Website và API menu dùng chung `licensesV9`. API cấp phép ở `https://www.mizzeproxy.store/v10/lease`; dùng bytes R14.35-BRAND-SECURE đi kèm. Giao thức 10 dùng identity RSA mới. Endpoint v9 trả 410 để yêu cầu cập nhật menu; không có đường hạ cấp.
+Website và API menu dùng chung `licensesV9`. API cấp phép ở `https://www.mizzeproxy.store/v10/lease`; dùng bytes R14.36-DONG-NHAT đi kèm. Giao thức 10 dùng identity RSA mới. Endpoint v9 trả 410 để yêu cầu cập nhật menu; không có đường hạ cấp.
 
 ## Kết nối key cũ và key vừa tạo
 
@@ -54,7 +54,7 @@ Các kiểm tra gồm hash đúng với menu, hạn key, duyệt ID, reset đồ
 
 Hướng dẫn cấu hình môi trường: [Vercel](https://vercel.com/docs/environment-variables), [Next.js](https://nextjs.org/docs/app/guides/environment-variables).
 
-## Bản R14.35
+## Bản R14.36
 
 Giấy phép mới ràng buộc protocol/release/branding digest, key, ID máy và nonce; phiên tối đa 30 giây, không tự đăng ký thiết bị từ menu. Thiết bị phải kích hoạt qua web. Nonce đã dùng bị từ chối trong cửa sổ hai phút, sổ nonce được giới hạn số mục.
 
