@@ -58,4 +58,10 @@ Hướng dẫn cấu hình môi trường: [Vercel](https://vercel.com/docs/envi
 
 Giấy phép mới ràng buộc protocol/release/branding digest, key, ID máy và nonce; phiên tối đa 30 giây, không tự đăng ký thiết bị từ menu. Thiết bị phải kích hoạt qua web. Nonce đã dùng bị từ chối trong cửa sổ hai phút, sổ nonce được giới hạn số mục.
 
+## Ihax 7 ngày
+
+Trang `/ihax` có một nút tạo key Ihax, hạn 7 ngày từ lúc tạo, sau đó bấm để sao chép. `POST /api/ihax/create` kiểm tra CSRF/origin và giới hạn tần suất; chỉ server chọn key và hạn. `GET /api/ihax/verify` nhận `X-FF-Key` hoặc query `key`, trả contract `{ok,ihaxV5,error}` của native Ihax.
+
+Dữ liệu tách ở `ihaxLicensesV1`, chỉ lưu SHA256 của key; không thay đổi `licensesV9` của Mizze. Proxy Ihax Start 1234 bản WebKey chuyển URL native gốc sang `/api/ihax/verify`. File `~3D` giữ nguyên; cần cập nhật proxy để dùng key mới.
+
 Thay identity ký không thu hồi được quyền quản trị Firebase/VPS bị lộ. Cần Owner Google Cloud thay tài khoản dịch vụ và thu hồi quyền/khóa cũ; tài khoản dịch vụ hiện tại không có quyền IAM. Không đưa signer mới lên VPS đang bị nghi xâm nhập.
