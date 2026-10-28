@@ -34,11 +34,11 @@ test('plain HTML form can authenticate without JavaScript while still enforcing 
     }, body: body.toString() });
   }
   const denied = await POST(request('https://evil.example'));
-  assert.equal(new URL(denied.headers.get('location')!).searchParams.get('error'), 'csrf_failed');
+  assert.equal(new URL(denied.headers.get('location')!,origin).searchParams.get('error'), 'csrf_failed');
   assert.equal(denied.cookies.get('mizze_session'), undefined);
   const accepted = await POST(request(origin));
   assert.equal(accepted.status, 303);
-  assert.equal(new URL(accepted.headers.get('location')!).pathname, '/dashboard');
+  assert.equal(new URL(accepted.headers.get('location')!,origin).pathname, '/dashboard');
   assert.ok(accepted.cookies.get('mizze_session')?.httpOnly);
   assert.equal(accepted.headers.get('cache-control'), 'private, no-store');
 });

@@ -26,10 +26,10 @@ export async function POST(request: NextRequest) {
     }), 'login');
     const data = await result.json();
     const destination = result.ok ? '/dashboard' : '/login?error=' + encodeURIComponent(data.error?.code || 'service_unavailable');
-    response = NextResponse.redirect(new URL(destination, request.url), 303);
+    response = new NextResponse(null,{status:303,headers:{Location:destination}});
     for (const cookie of result.cookies.getAll()) response.cookies.set(cookie);
   } catch {
-    response = NextResponse.redirect(new URL('/login?error=invalid_request', request.url), 303);
+    response = new NextResponse(null,{status:303,headers:{Location:'/login?error=invalid_request'}});
   }
   response.headers.set('Cache-Control', 'private, no-store');
   return response;
